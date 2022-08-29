@@ -1,0 +1,7 @@
+# Directories
+/build/
+/node_modules/
+/vendor/
+
+# Files
+/composer.lock
