@@ -1,0 +1,23 @@
+{
+	"type": "library",
+	"name": "wp-jazz/wp-post-uuid",
+	"description": "Use a UUID instead of a URI as a Post GUID in WordPress.",
+	"license": "MIT",
+	"require": {
+		"php": ">=7.2",
+		"composer/installers": "~2.0"
+	},
+	"config": {
+		"allow-plugins": {
+			"composer/installers": true
+		},
+		"installer-name": "jazz-wp-post-uuid",
+		"preferred-install": "dist",
+		"sort-packages": true
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-main": "1.x-dev"
+		}
+	}
+}
