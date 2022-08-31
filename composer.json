@@ -7,9 +7,13 @@
 		"php": ">=7.2",
 		"composer/installers": "~2.0"
 	},
+	"require-dev": {
+		"wp-jazz/coding-standards": "~1"
+	},
 	"config": {
 		"allow-plugins": {
-			"composer/installers": true
+			"composer/installers": true,
+			"dealerdirect/phpcodesniffer-composer-installer": true
 		},
 		"installer-name": "jazz-wp-post-uuid",
 		"preferred-install": "dist",
@@ -19,5 +23,21 @@
 		"branch-alias": {
 			"dev-main": "1.x-dev"
 		}
+	},
+	"scripts": {
+		"lint": [
+			"@lint:phpcs",
+			"@lint:phpstan",
+			"@lint:psalm"
+		],
+		"lint:phpcs": [
+			"phpcs -p ."
+		],
+		"lint:phpstan": [
+			"phpstan analyze"
+		],
+		"lint:psalm": [
+			"psalm"
+		]
 	}
 }
