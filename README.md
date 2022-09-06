@@ -1,7 +1,7 @@
 # WordPress Plugin: Post UUID
 
 | Header             | Value |
-| ------------------ | ----- |
+| :----------------- | :---- |
 | Requires PHP:      | 7.2.0 |
 | Requires at least: | 4.7.0 |
 | Tested up to:      | 6.0.2 |
@@ -16,20 +16,29 @@ or deduplicate the site URL when migrating content across deployment environment
 ## Overview
 
 By default, this plugin will generate a version 4 UUID using the WordPress function
-[`wp_generate_uuid4()`][wp_generate_uuid4] (introduced in WordPress 4.7.0).
+[`wp_generate_uuid4()`][function:wp_generate_uuid4] (introduced in WordPress 4.7.0).
 
-This plugin can be customized via two filters:
+The Post GUID is replaced during [`wp_insert_post_data`][filter:wp_insert_post_data]
+and [`wp_insert_attachment_data`][filter:wp_insert_attachment_data] hooks for
+filtering slashed post data just before it is updated in or added to the database.
 
-* 
-  ```php
-  apply_filters( 'jazz/post_uuid/generator/pre_discovery', Closure|null $pre_generator = null ) : Closure|null
-  ```
+The UUID generator to be used by this plugin can be customized via two filters:
+
+* `jazz/post_uuid/generator/pre_discovery`
+
   Allows the finder to be short-circuited, by returning a UUID generator.
-* 
+
+  ```php
+  apply_filters( 'jazz/post_uuid/generator/pre_discovery', ?Closure $pre_generator = null ) : ?Closure
+  ```
+
+* `jazz/post_uuid/generator/discovery`
+
+  Filters the UUID generator discovered by the finder.
+
   ```php
   apply_filters( 'jazz/post_uuid/generator/discovery', Closure $generator ) : Closure
   ```
-  Filters the UUID generator discovered by the finder.
 
 ## Background
 
@@ -114,17 +123,19 @@ Prior Art:
 * "[Using Permalinks: Plain Permalinks][wordpress.org?p=10867570]". WordPress Support.
   Revised 2022-02-19. Accessed 2022-08-29.
 
-[bjornjohansen.com?p=1901]:      https://bjornjohansen.com/uuid-as-wordpress-guid
-[composer/installers]:           https://github.com/composer/installers
-[deliciousbrains.com?p=6944]:    https://deliciousbrains.com/wordpress-post-guids-sometimes-update/
-[geekysoft/urn-uuid]:            https://wordpress.org/plugins/urn-uuid/
-[RFC 4122]:                      https://www.rfc-editor.org/rfc/rfc4122
-[ramsey/uuid]:                   https://github.com/ramsey/uuid
-[rmccue/realguids]:              https://github.com/rmccue/realguids
-[wikipedia/uuid]:                https://en.wikipedia.org/wiki/Universally_unique_identifier
-[wp-cli-search-replace]:         https://developer.wordpress.org/cli/commands/search-replace/
-[wp_generate_uuid4]:             https://developer.wordpress.org/reference/functions/wp_generate_uuid4/
-[wordplate/uuid]:                https://packagist.org/packages/wordplate/uuid
-[wordpress.org?p=10840035]:      https://wordpress.org/support/article/changing-the-site-url/#important-guid-note
-[wordpress.org?p=10867570]:      https://wordpress.org/support/article/using-permalinks/#plain-permalinks
-[deliciousbrains/wp-migrate-db]: https://wordpress.org/plugins/wp-migrate-db/
+[bjornjohansen.com?p=1901]:         https://bjornjohansen.com/uuid-as-wordpress-guid
+[composer/installers]:              https://github.com/composer/installers
+[deliciousbrains.com?p=6944]:       https://deliciousbrains.com/wordpress-post-guids-sometimes-update/
+[geekysoft/urn-uuid]:               https://wordpress.org/plugins/urn-uuid/
+[RFC 4122]:                         https://www.rfc-editor.org/rfc/rfc4122
+[ramsey/uuid]:                      https://github.com/ramsey/uuid
+[rmccue/realguids]:                 https://github.com/rmccue/realguids
+[wikipedia/uuid]:                   https://en.wikipedia.org/wiki/Universally_unique_identifier
+[wp-cli-search-replace]:            https://developer.wordpress.org/cli/commands/search-replace/
+[function:wp_generate_uuid4]:       https://developer.wordpress.org/reference/functions/wp_generate_uuid4/
+[filter:wp_insert_post_data]:       https://developer.wordpress.org/reference/hooks/wp_insert_post_data/
+[filter:wp_insert_attachment_data]: https://developer.wordpress.org/reference/hooks/wp_insert_attachment_data/
+[wordplate/uuid]:                   https://packagist.org/packages/wordplate/uuid
+[wordpress.org?p=10840035]:         https://wordpress.org/support/article/changing-the-site-url/#important-guid-note
+[wordpress.org?p=10867570]:         https://wordpress.org/support/article/using-permalinks/#plain-permalinks
+[deliciousbrains/wp-migrate-db]:    https://wordpress.org/plugins/wp-migrate-db/
