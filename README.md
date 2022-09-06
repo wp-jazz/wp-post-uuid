@@ -70,33 +70,26 @@ plugin will use the WordPress function [`wp_generate_uuid4()`][function:wp_gener
 introduced in WordPress 4.7.0. The found UUID generator will be stored in memory
 until the end of the WordPress request.
 
-When the `find_uuid_generator()` function is called, two filters will be applied
-which allow one to customize the UUID generator to use:
-
-* `jazz/post_uuid/generator/pre_discovery`
-
-  Allows the finder to be short-circuited, by returning a UUID generator.
-
-  _This is the recommended filter to use to replace the default UUID generator._
-
-  ```php
-  apply_filters( 'jazz/post_uuid/generator/pre_discovery', ?Closure $pre_generator = null ) : ?Closure
-  ```
+When the `find_uuid_generator()` function is called, one filter will be applied
+to customize the UUID generator to use:
 
 * `jazz/post_uuid/generator/discovery`
 
-  Filters the default UUID generator discovered by the finder.
+  Allows one to override the default UUID generator.
 
   ```php
-  apply_filters( 'jazz/post_uuid/generator/discovery', Closure $generator ) : Closure
+  apply_filters( 'jazz/post_uuid/generator/discovery', ?Closure $generator = null ) : ?Closure
   ```
 
-The UUID generator does not receive any parameters is expected to return a string.
+The UUID generator does not receive any parameters and must return a string.
 For example:
 
 ```php
-add_filter( 'jazz/post_uuid/generator/pre_discovery', function () : string {
-  return (string) \Ramsey\Uuid\Uuid::uuid4();
+add_filter( 'jazz/post_uuid/generator/discovery', function ( ?Closure $generator ) : ?Closure {
+  /** @var Closure():string */
+  return function () : string {
+    return (string) \Ramsey\Uuid\Uuid::uuid4();
+  }
 } );
 ```
 

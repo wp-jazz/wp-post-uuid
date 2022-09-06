@@ -9,7 +9,6 @@ declare( strict_types=1 );
 namespace Jazz\PostUUID;
 
 use Closure;
-use Ramsey\Uuid\Uuid;
 
 use function add_action;
 use function add_filter;
@@ -46,45 +45,44 @@ function filter_wp_insert_post_data( array $data ) : array {
 }
 
 /**
- * Finds a peer or fallback UUID generator function.
- */
-function find_peer_uuid_generator() : Closure {
-	return function () {
-		return wp_generate_uuid4();
-	};
-}
-
-/**
- * Finds a user-defined or peer UUID generator function.
+ * Finds a user-defined UUID generator function or uses a fallback.
  */
 function find_uuid_generator() : Closure {
 	/**
-	 * Allows {@see find_uuid_generator()} to be short-circuited,
-	 * by returning a UUID generator.
+	 * Allows {@see find_uuid_generator()} to override the fallback UUID generator.
 	 *
-	 * @param Closure|null $pre_generator The UUID generator.
+	 * @fires filter:jazz/post_uuid/generator/discovery
+	 *
+	 * @param Closure|null $generator The UUID generator.
 	 */
-	$pre_generator = apply_filters( 'jazz/post_uuid/generator/pre_discovery', null );
+	$generator = apply_filters( 'jazz/post_uuid/generator/discovery', null );
 
 	/**
 	 * This annotation is required until support for
 	 * {@link humanmade/psalm-plugin-wordpress#24 custom hooks} is merged.
 	 *
-	 * @var Closure|null $pre_generator
+	 * @var Closure|null $generator
 	 */
 
-	if ( ! is_null( $pre_generator ) ) {
-		return $pre_generator;
+	if ( is_null( $generator ) ) {
+		$generator = function (): string {
+			return wp_generate_uuid4();
+		};
 	}
 
-	$generator = find_peer_uuid_generator();
+	/** @var (Closure(): string) $generator */
 
-	/**
-	 * Filters the UUID generator discovered by {@see find_uuid_generator()}.
-	 *
-	 * @param Closure $pre_generator The UUID generator.
-	 */
-	return apply_filters( 'jazz/post_uuid/generator/discovery', $generator );
+	return $generator;
+}
+
+/**
+ * Generates a URN from a UUID.
+ *
+ * @param  string $uuid A UUID to format.
+ * @return string The UUID formatted as a URN.
+ */
+function format_uuid_urn( string $uuid ) : string {
+	return sprintf( 'urn:uuid:%s', $uuid );
 }
 
 /**
@@ -93,16 +91,10 @@ function find_uuid_generator() : Closure {
 function generate_uuid() : string {
 	$generator = get_uuid_generator();
 
-	return $generator();
-}
+	/** @var string */
+	$uuid = $generator();
 
-/**
- * Generates a URN from a UUID.
- *
- * @param string $uuid A UUID to format.
- */
-function format_uuid_urn( string $uuid ) : string {
-	return sprintf( 'urn:uuid:%s', $uuid );
+	return $uuid;
 }
 
 /**
@@ -114,6 +106,8 @@ function get_uuid_generator() : Closure {
 	if ( is_null( $generator ) ) {
 		$generator = find_uuid_generator();
 	}
+
+	/** @var (Closure(): string) $generator */
 
 	return $generator;
 }
