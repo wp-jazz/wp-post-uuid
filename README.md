@@ -1,7 +1,8 @@
 # WordPress Plugin: Post UUID
 
-Use a [UUID][wikipedia/uuid] (Universally Unique Identifier) instead of
-a plain permalink as a Post GUID (Global Unique Identifier) in WordPress.
+This plugin provides support for using a [<abbr>UUID</abbr>][wikipedia/uuid]
+(Universally Unique Identifier) instead of a plain permalink as a Post <abbr>GUID</abbr>
+(Global Unique Identifier) in WordPress.
 
 This plugin is useful for modern WordPress projects to avoid having to replace
 or deduplicate the site URL when migrating content across deployment environments.
@@ -29,7 +30,7 @@ If your project uses [composer/installers], the package should install
 as a must-use plugin.
 
 If the package is installed as a regular plugin, activate the package via
-WP-CLI or the WordPress administrator dashboard.
+WP-CLI or the WordPress administration dashboard.
 
 If the package is installed into Composer's vendor directory, activate the
 package via a must-use plugin file or from a file that has access to the
@@ -47,7 +48,7 @@ The Post GUID is replaced during [`wp_insert_post_data`][filter:wp_insert_post_d
 and [`wp_insert_attachment_data`][filter:wp_insert_attachment_data] hooks for
 filtering slashed post data just before it is updated in or added to the database.
 
-The plugin provides a handful of functions that can be used in themes and plugins:
+The plugin provides a handful of functions that can be used in your code:
 
 ```php
 use function Jazz\PostUUID\generate_uuid;
@@ -98,8 +99,8 @@ add_filter( 'jazz/post_uuid/generator/discovery', function ( ?Closure $generator
 
 ## Background
 
-WordPress traditionally uses a post's [plain permalink][wordpress.org?p=10867570]
-as a GUID.
+WordPress traditionally uses a the [plain permalink][wordpress.org?p=10867570]
+of a post as a GUID.
 
 > When a feed reader is reading feeds, it uses the contents of the GUID field to
 > know whether or not it has displayed a particular item before. It does this in

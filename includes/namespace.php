@@ -49,7 +49,7 @@ function filter_wp_insert_post_data( array $data ) : array {
  */
 function find_uuid_generator() : Closure {
 	/**
-	 * Allows {@see find_uuid_generator()} to override the fallback UUID generator.
+	 * Allows {@see find_uuid_generator()} to override the default UUID generator.
 	 *
 	 * @fires filter:jazz/post_uuid/generator/discovery
 	 *

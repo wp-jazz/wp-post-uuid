@@ -3,6 +3,11 @@
 	"name": "wp-jazz/wp-post-uuid",
 	"description": "Use a UUID instead of a URI as a Post GUID in WordPress.",
 	"license": "MIT",
+	"keywords": [
+		"jazz",
+		"wordpress",
+		"wp"
+	],
 	"require": {
 		"php": ">=7.4",
 		"composer/installers": "^1.0 || ^2.0"
