@@ -11,7 +11,7 @@
  * Author URI:        https://github.com/wp-jazz/
  * License:           MIT
  * Text Domain:       wp-jazz-post-uuid
- * Requires PHP:      7.2.0
+ * Requires PHP:      7.4.0
  * Requires at least: 4.7.0
  * Tested up to:      6.0.2
  */

@@ -4,12 +4,14 @@
 	"description": "Use a UUID instead of a URI as a Post GUID in WordPress.",
 	"license": "MIT",
 	"require": {
-		"php": ">=7.2",
-		"composer/installers": "~2.0"
+		"php": ">=7.4",
+		"composer/installers": "^1.0 || ^2.0"
 	},
 	"require-dev": {
-		"wp-jazz/coding-standards": "~1"
+		"wp-jazz/coding-standards": "^1"
 	},
+	"minimum-stability": "dev",
+	"prefer-stable": true,
 	"config": {
 		"allow-plugins": {
 			"composer/installers": true,

@@ -1,17 +1,20 @@
 # WordPress Plugin: Post UUID
 
-| Header             | Value |
-| :----------------- | :---- |
-| Requires PHP:      | 7.2.0 |
-| Requires at least: | 4.7.0 |
-| Tested up to:      | 6.0.2 |
-| License:           | MIT   |
-
 Use a [UUID][wikipedia/uuid] (Universally Unique Identifier) instead of
 a plain permalink as a Post GUID (Global Unique Identifier) in WordPress.
 
 This plugin is useful for modern WordPress projects to avoid having to replace
 or deduplicate the site URL when migrating content across deployment environments.
+
+## Requirements
+
+* Requires at least:
+  * PHP [7.4.0](https://php.net/releases/7_4_0.php)
+  * WordPress [4.7.0](https://make.wordpress.org/core/2016/12/05/wordpress-4-7-field-guide/)
+* Tested up to:
+  * PHP [8.0.0](https://php.net/releases/8.0/en.php)
+  * WordPress [6.0.2](https://wordpress.org/news/2022/08/wordpress-6-0-2-security-and-maintenance-release/)
+* License: [MIT](LICENSE)
 
 ## Installation
 
