@@ -22,14 +22,14 @@
 			"composer/installers": true,
 			"dealerdirect/phpcodesniffer-composer-installer": true
 		},
-		"installer-name": "jazz-wp-post-uuid",
 		"preferred-install": "dist",
 		"sort-packages": true
 	},
 	"extra": {
 		"branch-alias": {
 			"dev-main": "1.x-dev"
-		}
+		},
+		"installer-name": "jazz-wp-post-uuid"
 	},
 	"scripts": {
 		"lint": [
